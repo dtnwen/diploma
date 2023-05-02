@@ -20,11 +20,19 @@ describe('NFT contract function test', function() {
             expect(await nft.owner()).to.equal(owner.address);
         })
 
+        it('Should change owner correctly', async function () {
+            const { nft, owner, signer } = await loadFixture(deployContract);
+
+            await nft.transferOwnership(signer.address);
+            expect(await nft.owner()).to.equal(signer.address)
+        })
+
         it('Should set URI correctly', async function () {
             const { nft } = await loadFixture(deployContract);
             
             expect(await nft.uri(0)).to.equal("ipfs://Qmf7PCo3TnDfHMpte2zgjv4HgFVPxV7TRcdSyy3FPxvugj/{id}.json")
         })
+
     })
 
     describe('setURI function test', function() {
