@@ -18,17 +18,6 @@ contract NFT is ERC1155, Ownable, Pausable {
         // ipfs://QmcMyHy3WGLhj9Qo3jM3ykvjQHYoYvkYzTmmXzsLZR4RR5/{id}.json
     {}
 
-// https://docs.opensea.io/docs/metadata-standards#implementing-token-uri
-    // function uri(uint256 _tokenId) override public pure returns (string memory) {
-    //     return string(
-    //         abi.encodePacked(
-    //             "ipfs://Qmf7PCo3TnDfHMpte2zgjv4HgFVPxV7TRcdSyy3FPxvugj/",
-    //             Strings.toString(_tokenId),
-    //             ".json"
-    //         )
-    //     );
-    // }
-
     function setURI(string memory newuri) public onlyOwner {
         _setURI(newuri);
     }
@@ -39,13 +28,6 @@ contract NFT is ERC1155, Ownable, Pausable {
         require(msg.value == 0.25 ether, "insufficient balance");
         _mint(msg.sender, STANDARD, 1, "0x00");
         _standardCounter.increment();   
-    }
-
-    function mintBatch(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
-        public
-        onlyOwner
-    {
-        _mintBatch(to, ids, amounts, data);
     }
 
     function pause() public onlyOwner {

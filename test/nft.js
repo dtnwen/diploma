@@ -62,13 +62,6 @@ describe('NFT contract function test', function() {
 
             await expect(nft.connect(signer).mintStandard({value: ethers.utils.parseEther("0.24")})).to.be.reverted;
         })
-
-        it('Let owner to mint batch', async function () {
-            const { nft, owner } = await loadFixture(deployContract);
-
-            await nft.mintBatch(owner.address, [0], [100], "0x00");
-            expect(await nft.balanceOf(owner.address, 0)).to.equal(100);
-        })
     })
 
     describe('Transfer token test', function() {
