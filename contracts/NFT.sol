@@ -30,13 +30,6 @@ contract NFT is ERC1155, Ownable, Pausable {
         _standardCounter.increment();   
     }
 
-    // function mintBatch(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
-    //     public
-    //     onlyOwner
-    // {
-    //     _mintBatch(to, ids, amounts, data);
-    // }
-
     function pause() public onlyOwner {
         _pause();
     }
