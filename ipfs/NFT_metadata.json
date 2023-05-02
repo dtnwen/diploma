@@ -1,0 +1,12 @@
+{
+    "name": "Zintea standard subscriber",
+    "description": "Enjoy unlimted bubble tea",
+    "image": "https://ipfs.io/ipfs/QmUdyP5gRupbXfAJyDn1jusWT8NdVVgK5GmWyZAPh7bhZ9?filename=NFT.png",
+    "external_url": "",
+    "attributes": [
+        {
+            "trait_type": "Level",
+            "value": "Standard"
+        }
+    ]
+}
