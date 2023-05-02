@@ -22,7 +22,7 @@ contract NFT is ERC1155, Ownable, Pausable {
         _setURI(newuri);
     }
 
-    function mintStandard() public payable {
+    function mintStandard() public payable whenNotPaused {
         require(_standardCounter.current() <= 2222, "Sorry we reach max supply" );
         require(balanceOf(msg.sender, STANDARD) == 0, "You can only own 1 Standard NFT");
         require(msg.value == 0.25 ether, "insufficient balance");
@@ -38,11 +38,11 @@ contract NFT is ERC1155, Ownable, Pausable {
         _unpause();
     }
 
-    function _beforeTokenTransfer(address operator, address from, address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
-        internal
-        whenNotPaused
-        override
-    {
-        super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
-    }
+    // function _beforeTokenTransfer(address operator, address from, address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
+    //     internal
+    //     whenNotPaused
+    //     override
+    // {
+    //     super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
+    // }
 }
