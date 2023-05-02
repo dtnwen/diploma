@@ -18,22 +18,11 @@ contract NFT is ERC1155, Ownable, Pausable {
         // ipfs://QmcMyHy3WGLhj9Qo3jM3ykvjQHYoYvkYzTmmXzsLZR4RR5/{id}.json
     {}
 
-// https://docs.opensea.io/docs/metadata-standards#implementing-token-uri
-    // function uri(uint256 _tokenId) override public pure returns (string memory) {
-    //     return string(
-    //         abi.encodePacked(
-    //             "ipfs://Qmf7PCo3TnDfHMpte2zgjv4HgFVPxV7TRcdSyy3FPxvugj/",
-    //             Strings.toString(_tokenId),
-    //             ".json"
-    //         )
-    //     );
-    // }
-
     function setURI(string memory newuri) public onlyOwner {
         _setURI(newuri);
     }
 
-    function mintStandard() public payable {
+    function mintStandard() public payable whenNotPaused {
         require(_standardCounter.current() <= 2222, "Sorry we reach max supply" );
         require(balanceOf(msg.sender, STANDARD) == 0, "You can only own 1 Standard NFT");
         require(msg.value == 0.25 ether, "insufficient balance");
@@ -41,12 +30,12 @@ contract NFT is ERC1155, Ownable, Pausable {
         _standardCounter.increment();   
     }
 
-    function mintBatch(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
-        public
-        onlyOwner
-    {
-        _mintBatch(to, ids, amounts, data);
-    }
+    // function mintBatch(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
+    //     public
+    //     onlyOwner
+    // {
+    //     _mintBatch(to, ids, amounts, data);
+    // }
 
     function pause() public onlyOwner {
         _pause();
@@ -56,11 +45,11 @@ contract NFT is ERC1155, Ownable, Pausable {
         _unpause();
     }
 
-    function _beforeTokenTransfer(address operator, address from, address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
-        internal
-        whenNotPaused
-        override
-    {
-        super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
-    }
+    // function _beforeTokenTransfer(address operator, address from, address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
+    //     internal
+    //     whenNotPaused
+    //     override
+    // {
+    //     super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
+    // }
 }
