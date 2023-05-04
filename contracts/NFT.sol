@@ -8,25 +8,35 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 contract NFT is ERC1155, Ownable, Pausable {
     using Counters for Counters.Counter;
-    
+
     uint256 public constant STANDARD = 0;
     Counters.Counter private _standardCounter;
 
     constructor()
-        ERC1155("ipfs://Qmf7PCo3TnDfHMpte2zgjv4HgFVPxV7TRcdSyy3FPxvugj/{id}.json")
-        // ipfs://QmcMyHy3WGLhj9Qo3jM3ykvjQHYoYvkYzTmmXzsLZR4RR5/{id}.json
-    {}
+        ERC1155(
+            "ipfs://Qmf7PCo3TnDfHMpte2zgjv4HgFVPxV7TRcdSyy3FPxvugj/{id}.json"
+        )
+    // ipfs://QmcMyHy3WGLhj9Qo3jM3ykvjQHYoYvkYzTmmXzsLZR4RR5/{id}.json
+    {
+
+    }
 
     function setURI(string memory newuri) public onlyOwner {
         _setURI(newuri);
     }
 
     function mintStandard() public payable whenNotPaused {
-        require(_standardCounter.current() <= 2222, "Sorry we reach max supply" );
-        require(balanceOf(msg.sender, STANDARD) == 0, "You can only own 1 Standard NFT");
+        require(
+            _standardCounter.current() <= 2222,
+            "Sorry we reach max supply"
+        );
+        require(
+            balanceOf(msg.sender, STANDARD) == 0,
+            "You can only own 1 Standard NFT"
+        );
         require(msg.value == 0.25 ether, "insufficient balance");
         _mint(msg.sender, STANDARD, 1, "0x00");
-        _standardCounter.increment();   
+        _standardCounter.increment();
     }
 
     function pause() public onlyOwner {
