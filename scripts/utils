@@ -1,0 +1,17 @@
+const { ethers } = require('hardhat');
+require('dotenv').config()
+
+async function main() {
+    const MAX_SUPPLY = 2222;
+    const signers = await ethers.getSigners();
+    const address = []
+    // Mint up to max supply using different signers
+    for (let i = 0; i < MAX_SUPPLY; i++) {
+        address.push(signers[i % signers.length].address)
+    }
+    const unique = [...new Set(address)]
+    console.log(address.length)
+    console.log(unique.length)
+}
+
+main()

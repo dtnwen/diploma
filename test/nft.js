@@ -1,10 +1,12 @@
 const { expect, assert } = require('chai');
 const { loadFixture } = require("@nomicfoundation/hardhat-network-helpers");
 const { ethers } = require('hardhat');
+require('dotenv').config()
 
 describe('NFT contract function test', function() {
     async function deployContract() {
         const [ owner, signer ] = await ethers.getSigners();
+    
         const NFT = await ethers.getContractFactory('NFT');
         const nft = await NFT.deploy();
 
@@ -30,7 +32,7 @@ describe('NFT contract function test', function() {
         it('Should set URI correctly', async function () {
             const { nft } = await loadFixture(deployContract);
             
-            expect(await nft.uri(0)).to.equal("ipfs://Qmf7PCo3TnDfHMpte2zgjv4HgFVPxV7TRcdSyy3FPxvugj/{id}.json")
+            expect(await nft.uri(0)).to.equal("ipfs://QmcMyHy3WGLhj9Qo3jM3ykvjQHYoYvkYzTmmXzsLZR4RR5/{id}.json")
         })
 
     })
@@ -62,14 +64,44 @@ describe('NFT contract function test', function() {
             const { nft, signer, price } = await loadFixture(deployContract);
             await nft.connect(signer).mintStandard({value: price});
 
-            await expect(nft.connect(signer).mintStandard({value: price})).to.be.reverted;
+            await expect(nft.connect(signer).mintStandard({value: price})).to.be.revertedWith("You can only own 1 Standard NFT");
         })
 
         it('Must be pay exactly 0.25 ether to mint the NFT', async function () {
             const { nft, signer } = await loadFixture(deployContract);
 
-            await expect(nft.connect(signer).mintStandard({value: ethers.utils.parseEther("0.24")})).to.be.reverted;
+            await expect(nft.connect(signer).mintStandard({value: ethers.utils.parseEther("0.24")})).to.be.revertedWith("insufficient balance");
         })
+
+        // it('Should let mint only 2222 NFT', async function () {
+        //     const {owner, nft, price} = await loadFixture(deployContract);
+
+        //     const hdNode = await ethers.utils.HDNode.fromMnemonic(process.env.SEED_PHRASE)
+        
+        //     for (let i = 0; i < 2222; i++) {
+        //         const signers = await ethers.getSigner(hdNode.derivePath(`m/44'/60'/0'/0/${i}`).address);
+
+        //         console.log('creating signer: ', signers.address)
+
+        //         const tx = {
+        //             to: signers.address,
+        //             value: ethers.utils.parseEther("1")
+        //         }
+        //         console.log('creating transaction: ', tx)
+
+        //         const txn = await owner.sendTransaction(tx);
+        //         console.log('Mining transaction...')
+
+        //         await txn.wait()
+        //         console.log('Transaction mined!')
+
+        //         await nft.connect(signers).mintStandard({value:price})
+        //         console.log('Minting nft')
+
+        //         expect(await nft.balanceOf(signer.address, 0)).to.be.equal(1);
+        //     }
+
+        // })
     })
 
     describe('Transfer token test', function() {

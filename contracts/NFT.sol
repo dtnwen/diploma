@@ -14,12 +14,9 @@ contract NFT is ERC1155, Ownable, Pausable {
 
     constructor()
         ERC1155(
-            "ipfs://Qmf7PCo3TnDfHMpte2zgjv4HgFVPxV7TRcdSyy3FPxvugj/{id}.json"
+            "ipfs://QmcMyHy3WGLhj9Qo3jM3ykvjQHYoYvkYzTmmXzsLZR4RR5/{id}.json"
         )
-    // ipfs://QmcMyHy3WGLhj9Qo3jM3ykvjQHYoYvkYzTmmXzsLZR4RR5/{id}.json
-    {
-
-    }
+    {}
 
     function setURI(string memory newuri) public onlyOwner {
         _setURI(newuri);
