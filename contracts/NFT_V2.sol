@@ -7,12 +7,15 @@ import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract NFT is Initializable, ERC1155Upgradeable, OwnableUpgradeable, PausableUpgradeable {
+contract NFT_V2 is Initializable, ERC1155Upgradeable, OwnableUpgradeable, PausableUpgradeable {
     using CountersUpgradeable for CountersUpgradeable.Counter;
 
     uint256 public constant STANDARD = 0;
     CountersUpgradeable.Counter private _standardCounter;
 
+    uint256 public constant PREMIUM = 1;
+    CountersUpgradeable.Counter private _premiumCounter;
+    
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
      _disableInitializers();
@@ -40,6 +43,20 @@ contract NFT is Initializable, ERC1155Upgradeable, OwnableUpgradeable, PausableU
         require(msg.value == 0.25 ether, "insufficient balance");
         _mint(msg.sender, STANDARD, 1, "0x00");
         _standardCounter.increment();
+    }
+
+    function mintPremium() public payable whenNotPaused {
+        require(
+            _premiumCounter.current() <= 1000,
+            "Sorry we reach max supply"
+        );
+        require(
+            balanceOf(msg.sender, PREMIUM) == 0,
+            "You can only own 1 Standard NFT"
+        );
+        require(msg.value == 0.25 ether, "insufficient balance");
+        _mint(msg.sender, PREMIUM, 1, "0x00");
+        _premiumCounter.increment();
     }
 
     function pause() public onlyOwner {

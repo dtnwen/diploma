@@ -1,6 +1,6 @@
 const { expect, assert } = require('chai');
 const { loadFixture } = require("@nomicfoundation/hardhat-network-helpers");
-const { ethers } = require('hardhat');
+const { ethers, upgrades } = require('hardhat');
 require('dotenv').config()
 
 describe('NFT contract function test', function() {
@@ -8,7 +8,7 @@ describe('NFT contract function test', function() {
         const [ owner, signer ] = await ethers.getSigners();
     
         const NFT = await ethers.getContractFactory('NFT');
-        const nft = await NFT.deploy();
+        const nft = await upgrades.deployProxy(NFT)
 
         const price = ethers.utils.parseEther("0.25");
 
@@ -163,6 +163,41 @@ describe('NFT contract function test', function() {
             await nft.safeTransferFrom(owner.address, signer.address, 0, 1, '0x00');
 
             expect(await nft.balanceOf(signer.address, 0)).to.equal(1);
+        })
+    })
+
+    describe('Test for upgrading contracts', function() {
+        it('Should change Implementation correctly', async function () {
+            const { nft } = await loadFixture(deployContract);
+            
+            const NFT2 = await ethers.getContractFactory('NFT_V2');
+            
+            const upgraded = await upgrades.upgradeProxy(nft, NFT2);
+
+            assert.equal(await upgraded.STANDARD(), 0)
+            assert.equal(await upgraded.PREMIUM(), 1)            
+        })
+
+        it('Should transfer proxy admin', async function () {
+            const { signer, owner } = await loadFixture(deployContract);
+
+            await upgrades.admin.transferProxyAdminOwnership(signer.address)
+            await expect(upgrades.admin.transferProxyAdminOwnership(signer.address, owner)).to.be.revertedWith('Ownable: caller is not the owner');                
+        })
+
+        it('Should let admin only to transfer proxy admin', async function () {
+            const { nft, signer } = await loadFixture(deployContract);
+
+            await expect(upgrades.admin.transferProxyAdminOwnership(signer.address, signer)).to.be.reverted;
+        })
+
+        it('Should let admin only to transfer implementation', async function () {
+            const { nft, signer } = await loadFixture(deployContract);
+
+            const NFT2 = await ethers.getContractFactory('NFT_V2');
+            await upgrades.admin.transferProxyAdminOwnership(signer.address);
+            
+            await expect(upgrades.upgradeProxy(nft, NFT2)).to.be.revertedWith('Ownable: caller is not the owner');
         })
     })
 })
