@@ -1,22 +1,34 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
+// import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
+// import "@openzeppelin/contracts/access/Ownable.sol";
+// import "@openzeppelin/contracts/security/Pausable.sol";
+// import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract NFT is ERC1155, Ownable, Pausable {
-    using Counters for Counters.Counter;
+import "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+
+contract NFT is Initializable, ERC1155Upgradeable, OwnableUpgradeable, PausableUpgradeable {
+    using CountersUpgradeable for CountersUpgradeable.Counter;
 
     uint256 public constant STANDARD = 0;
-    Counters.Counter private _standardCounter;
+    CountersUpgradeable.Counter private _standardCounter;
 
-    constructor()
-        ERC1155(
-            "ipfs://QmcMyHy3WGLhj9Qo3jM3ykvjQHYoYvkYzTmmXzsLZR4RR5/{id}.json"
-        )
-    {}
+    /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+     _disableInitializers();
+    }
+
+    function initialize() initializer public {
+        __ERC1155_init("ipfs://QmcMyHy3WGLhj9Qo3jM3ykvjQHYoYvkYzTmmXzsLZR4RR5/{id}.json");
+        __Ownable_init();
+        __Pausable_init();
+        
+    }
 
     function setURI(string memory newuri) public onlyOwner {
         _setURI(newuri);
@@ -43,12 +55,4 @@ contract NFT is ERC1155, Ownable, Pausable {
     function unpause() public onlyOwner {
         _unpause();
     }
-
-    // function _beforeTokenTransfer(address operator, address from, address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
-    //     internal
-    //     whenNotPaused
-    //     override
-    // {
-    //     super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
-    // }
 }
