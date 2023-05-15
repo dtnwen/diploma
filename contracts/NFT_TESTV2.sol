@@ -7,7 +7,7 @@ import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract NFT_V2 is Initializable, ERC1155Upgradeable, OwnableUpgradeable, PausableUpgradeable {
+contract NFT_TESTV2 is Initializable, ERC1155Upgradeable, OwnableUpgradeable, PausableUpgradeable {
     using CountersUpgradeable for CountersUpgradeable.Counter;
 
     uint256 public constant STANDARD = 0;
