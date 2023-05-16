@@ -2,6 +2,7 @@
 $ git clone https://github.com/dtnwen/diploma.git
 
 $ cd diploma
+
 $ npm install
 
 
