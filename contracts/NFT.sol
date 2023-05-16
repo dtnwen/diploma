@@ -7,7 +7,12 @@ import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract NFT is Initializable, ERC1155Upgradeable, OwnableUpgradeable, PausableUpgradeable {
+contract NFT is
+    Initializable,
+    ERC1155Upgradeable,
+    OwnableUpgradeable,
+    PausableUpgradeable
+{
     using CountersUpgradeable for CountersUpgradeable.Counter;
 
     uint256 public constant STANDARD = 0;
@@ -15,11 +20,13 @@ contract NFT is Initializable, ERC1155Upgradeable, OwnableUpgradeable, PausableU
 
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
-     _disableInitializers();
+        _disableInitializers();
     }
 
-    function initialize() initializer public {
-        __ERC1155_init("ipfs://QmcMyHy3WGLhj9Qo3jM3ykvjQHYoYvkYzTmmXzsLZR4RR5/{id}.json");
+    function initialize() public initializer {
+        __ERC1155_init(
+            "ipfs://QmcMyHy3WGLhj9Qo3jM3ykvjQHYoYvkYzTmmXzsLZR4RR5/{id}.json"
+        );
         __Ownable_init();
         __Pausable_init();
     }
