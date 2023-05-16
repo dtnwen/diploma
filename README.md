@@ -5,6 +5,9 @@ $ cd diploma
 
 $ npm install
 
+# Test
+$ npx hardhat test
+
 
 Proxy addres:  0x53CFBAa67156102220DDf3a1a9452A9600aB0654
 Proxy admin address:  0xCec613E78EBe73B66482a19f4ac29c2Dc5e9a853
