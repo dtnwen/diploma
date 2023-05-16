@@ -42,5 +42,5 @@ contract NFT is ERC1155, Ownable, Pausable {
 
     function unpause() public onlyOwner {
         _unpause();
-    }
+    }   
 }
