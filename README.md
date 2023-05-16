@@ -1,13 +1,5 @@
-# Sample Hardhat Project
+Proxy addres:  0x53CFBAa67156102220DDf3a1a9452A9600aB0654
+Proxy admin address:  0xCec613E78EBe73B66482a19f4ac29c2Dc5e9a853
+Implementation address:  0x27c516Ec81CF0297C916b026C82d31D87Ce1fD96
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
-
-Try running some of the following tasks:
-
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
-```
+Public key: 0x8bF58f10b55a6ae3041cA18D86D32Ca67432Fa1C
