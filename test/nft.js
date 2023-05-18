@@ -170,12 +170,13 @@ describe('NFT contract function test', function() {
         it('Should change Implementation correctly', async function () {
             const { nft } = await loadFixture(deployContract);
             
-            const NFT2 = await ethers.getContractFactory('NFT_TESTV2');
+            const nft1 = await upgrades.erc1967.getImplementationAddress(nft.address)
+            const NFT2 = await ethers.getContractFactory('NFT_V2');
             
             const upgraded = await upgrades.upgradeProxy(nft, NFT2);
+            const nft2 = await upgrades.erc1967.getImplementationAddress(nft.address)
 
-            assert.equal(await upgraded.STANDARD(), 0)
-            assert.equal(await upgraded.PREMIUM(), 1)            
+            assert.notEqual(nft1, nft2) 
         })
 
         it('Should transfer proxy admin', async function () {
@@ -194,7 +195,7 @@ describe('NFT contract function test', function() {
         it('Should let admin only to transfer implementation', async function () {
             const { nft, signer } = await loadFixture(deployContract);
 
-            const NFT2 = await ethers.getContractFactory('NFT_TESTV2');
+            const NFT2 = await ethers.getContractFactory('NFT_V2');
             await upgrades.admin.transferProxyAdminOwnership(signer.address);
             
             await expect(upgrades.upgradeProxy(nft, NFT2)).to.be.revertedWith('Ownable: caller is not the owner');
