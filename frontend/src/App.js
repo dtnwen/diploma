@@ -11,6 +11,7 @@ function App() {
     <ChakraProvider theme={theme}>
       <Fonts />
       <Landingpage />
+      A
     </ChakraProvider>
   );
 }
