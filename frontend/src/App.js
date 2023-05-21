@@ -1,16 +1,18 @@
-import React from 'react';
+import { React, useState } from 'react';
 import {
   ChakraProvider,
 } from '@chakra-ui/react';
 import theme from './theme'
-import Fonts from './Fonts'
+import Fonts from './assets/Fonts'
 import Landingpage from './components/Landingpage'
 
 function App() {
+  const [walletAddress, setWalletAddress] = useState("");
+
   return (
     <ChakraProvider theme={theme}>
       <Fonts />
-      <Landingpage />
+      <Landingpage walletAddress={walletAddress} setWalletAddress={setWalletAddress}/>
       A
     </ChakraProvider>
   );
