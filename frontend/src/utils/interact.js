@@ -29,10 +29,7 @@ export const connectWallet = async () => {
       const walletAccounts = await ethereum.request({
         method: 'eth_requestAccounts',
       });
-      return {
-        wallet: walletAccounts[0],
-        status: true,
-      };
+      return walletAccounts[0]    
     } catch (error) {
       console.error(error);
     }
@@ -70,7 +67,7 @@ export const mintNFT = async () => {
     return (
       <>
         You must install Metamask in your browser. 
-        <a target="_blank" href={`https://metamask.io`}>
+        <a href={`https://metamask.io`}>
           Click here to install!
         </a>
       </>

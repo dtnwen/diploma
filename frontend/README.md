@@ -38,3 +38,11 @@ $ touch .env
 # profile page
 ## static
 ## function
+## deploy to vercel
+
+# Sever
+Create on [vercel](https://vercel.com/docs/storage/edge-config/get-started) 
+
+mkdir server
+
+touch middleware.js

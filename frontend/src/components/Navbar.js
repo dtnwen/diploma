@@ -27,7 +27,7 @@ const Navbar = ({ walletAddress, setWalletAddress }) => {
     setShowLoader(true);
     const wallet = await connectWallet();
 
-    setWalletAddress(wallet.wallet);
+    setWalletAddress(wallet);
     setShowLoader(false);
   };
 
