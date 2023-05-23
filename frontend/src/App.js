@@ -2,9 +2,11 @@ import { React, useState } from 'react';
 import {
   ChakraProvider,
 } from '@chakra-ui/react';
+import Navbar from './components/Navbar'
 import theme from './theme'
 import Fonts from './assets/Fonts'
-import Landingpage from './components/Landingpage'
+import Landingpage from './routes/Landingpage'
+import { Outlet } from 'react-router-dom';
 
 function App() {
   const [walletAddress, setWalletAddress] = useState("");
@@ -12,8 +14,8 @@ function App() {
   return (
     <ChakraProvider theme={theme}>
       <Fonts />
-      <Landingpage walletAddress={walletAddress} setWalletAddress={setWalletAddress}/>
-      A
+      <Navbar walletAddress={walletAddress} setWalletAddress={setWalletAddress}/>
+      <Outlet context={[walletAddress, setWalletAddress]}/>
     </ChakraProvider>
   );
 }

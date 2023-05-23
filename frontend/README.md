@@ -1,33 +1,40 @@
+$npm i react-router-dom
+
 dtnwen@Chusoianchay:~/learn/diploma/frontend$ mkdir src/components
 dtnwen@Chusoianchay:~/learn/diploma/frontend$ cd src/components/
 dtnwen@Chusoianchay:~/learn/diploma/frontend/src/components$ touch landingpage.js
 dtnwen@Chusoianchay:~/learn/diploma/frontend/src/components$ touch navbar.js
 
-# prepare
+# landingpage
+## prepare
 function:
 - connect wallet
     - check if mm installed
     - 
 - mint nft
 
-# Build static
+## Build static
 - front end
 - provider
 - contract instances
 
-# connect metamask to harhat localhost
+## connect metamask to harhat localhost
 
-# add state
+
+## add state
 decide to let the state live on <App>
 
 state:
 - walletAddress
 
-# connect function
+## connect function
 
-# mint function
+## mint function
 $ npm install alchemy-sdk
 $ npm install ethers
 $ npm install dotenv
 $ touch .env
 
+# profile page
+## static
+## function

@@ -1,59 +1,78 @@
-const { ethereum } = window
-const { ethers } = require("ethers");
-const { Network, Alchemy } = require("alchemy-sdk")
+const { ethereum } = window;
+const { ethers } = require('ethers');
 
-const CONTRACT_ABI = require('../assets/contract_abi.json')
-const CONTRACT_ADDRESS='0x53CFBAa67156102220DDf3a1a9452A9600aB0654'
+const CONTRACT_ABI = require('../assets/contract_abi.json');
+const CONTRACT_ADDRESS = '0x53CFBAa67156102220DDf3a1a9452A9600aB0654';
 
-// const settings = {
-//     apiKey: process.env.API_KEY,
-//     network: Network.ETH_SEPOLIA,
+export const isMetaMaskInstalled = () => {
+  const { ethereum } = window;
+  return Boolean(ethereum && ethereum.isMetaMask);
+};
+
+// export const getCurrentAccount = async () => {
+//     if (ethereum) {
+//         try {
+//             const walletAccounts = await ethereum.request({method: 'eth_accounts'});
+//             if (walletAccounts.length > 0) {
+//                 return walletAccounts[0];
+//             }
+
+//         } catch (error) {
+//             console.error(error)
+//         }
+//     }
 // }
 
-// const alchemy = new Alchemy(settings)
-
-export const isMetamaskInstalled = () => {
-    if (ethereum) {
-        return ethereum.isMetaMask
-    }
-}
-
-export const getCurrentAccount = async () => {
-    try {
-        if (ethereum) {
-            const walletAccounts = await ethereum.request({method: 'eth_accounts'});
-            if (walletAccounts.length > 0) {
-                return walletAccounts[0];
-            }
-        }
-            
-    } catch (error) {
-        console.error(error)
-    }
-}
-
 export const connectWallet = async () => {
+  if (ethereum) {
     try {
-        if (ethereum) {
-            const walletAccounts = await ethereum.request({method: 'eth_requestAccounts'})
-            return walletAccounts[0]
-        } 
+      const walletAccounts = await ethereum.request({
+        method: 'eth_requestAccounts',
+      });
+      return {
+        wallet: walletAccounts[0],
+        status: true,
+      };
     } catch (error) {
-        console.error(error)
+      console.error(error);
     }
-}
+  } else
+    return {
+      status: false,
+    };
+};
 
 export const mintNFT = async () => {
-    const provider = new ethers.providers.Web3Provider(ethereum)
-    const signer = provider.getSigner()
-    const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer )
+  if (ethereum) {
     try {
-        const txn = await contract.mintStandard({value: ethers.utils.parseEther("0.25")})
-        await txn.wait()
-        console.log(txn)
-        return true
-    } catch(error) {
-        console.log(error)
-        return false
+      const walletAccounts = await ethereum.request({ method: 'eth_accounts' });
+      if (walletAccounts.length > 0) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(
+          CONTRACT_ADDRESS,
+          CONTRACT_ABI,
+          signer
+        );
+        const txn = await contract.mintStandard({
+          value: ethers.utils.parseEther('0.25'),
+        });
+        await txn.wait();
+        return true;
+      } else {
+        return 'Please sign in first';
+      }
+    } catch (error) {
+      console.error(error);
+      return error.reason;
     }
-}
+  } else
+    return (
+      <>
+        You must install Metamask in your browser. 
+        <a target="_blank" href={`https://metamask.io`}>
+          Click here to install!
+        </a>
+      </>
+    );
+};
