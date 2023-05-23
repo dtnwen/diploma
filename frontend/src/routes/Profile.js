@@ -70,8 +70,8 @@ const Profile = () => {
         minW="350px"
         minH="100vh"
         maxW="1920px"
-        w="100%"
         maxH="1080px"
+        w="100%"
         bgGradient="linear(270deg, rgba(250, 186, 161, 0.68) 0%, rgba(208, 139, 177, 0.841185) 54.2%, #A75CC1 100%)"
       >
         <Heading

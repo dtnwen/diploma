@@ -5,7 +5,6 @@ import {
 import Navbar from './components/Navbar'
 import theme from './theme'
 import Fonts from './assets/Fonts'
-import Landingpage from './routes/Landingpage'
 import { Outlet } from 'react-router-dom';
 
 function App() {

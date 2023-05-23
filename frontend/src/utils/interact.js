@@ -34,9 +34,7 @@ export const connectWallet = async () => {
       console.error(error);
     }
   } else
-    return {
-      status: false,
-    };
+    return false
 };
 
 export const mintNFT = async () => {
