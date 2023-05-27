@@ -1,0 +1,1 @@
+install edge config sdk
