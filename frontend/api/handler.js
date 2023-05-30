@@ -1,7 +1,8 @@
-export default function handler(request, response) {
-    response.status(200).json({
-      body: request.body,
-      query: request.query,
-      cookies: request.cookies,
-    });
-  }
+module.exports = async (req, res) => {
+  // Extract the event data from the request body
+  const eventData = req.body;
+
+  // Process the event data, e.g., update promo codes based on NFT ownership changes
+
+  res.status(200).json({ message: 'Event processed' });
+};

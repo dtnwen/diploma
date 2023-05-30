@@ -1,7 +1,7 @@
 import React, { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider} from 'react-router-dom'
-import { ErrorPage, Landingpage, Profile } from './routes/index'
+import { ErrorPage, Landingpage, Profile, Instruction, Verify } from './routes/index'
 import App from './App';
 
 const router = createBrowserRouter([
@@ -19,7 +19,18 @@ const router = createBrowserRouter([
         path: "/",
         element: <Landingpage />,
         errorElement: <ErrorPage />,
-      }
+        
+      },
+      {
+        path: "/how",
+        element: <Instruction/>,
+        errorElement: <ErrorPage/>
+      },
+      {
+        path: "/verify",
+        element: <Verify />,
+        errorElement: <ErrorPage/>
+      },
     ]
   },
   

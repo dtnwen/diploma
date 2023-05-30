@@ -61,6 +61,8 @@ const Navbar = ({ walletAddress, setWalletAddress }) => {
         bgGradient="linear(270deg, rgba(250, 186, 161, 0.68) 0%, rgba(208, 139, 177, 0.841185) 54.2%, #A75CC1 100%)"
       >
         <Text
+          as={ReactLink}
+          to="/"
           flex="1"
           fontFamily="logo"
           align="left"
@@ -93,7 +95,7 @@ const Navbar = ({ walletAddress, setWalletAddress }) => {
             >
               {Boolean(walletAddress) ? (
                 'Connected: ' +
-                String(walletAddress).substring(0, 6) +
+                String(walletAddress).substring(0, 5) +
                 '...' +
                 String(walletAddress).substring(38)
               ) : (
@@ -120,35 +122,35 @@ const Navbar = ({ walletAddress, setWalletAddress }) => {
 const Navigation = () => {
   const location = useLocation();
 
-  if (location.pathname == '/') {
-    return (
-      <>
-        <Link as={ReactLink} to="/" pl="1em" pr="1em">
-          Home
-        </Link>
-        <Link as={ReactLink} to="/how" pl="1em" pr="1em">
-          How it works
-        </Link>
-        <Link as={ReactLink} to="/about" pl="1em" pr="1em">
-          About us
-        </Link>
-        <Link as={ReactLink} to="/faq" pl="1em" pr="1em">
-          FAQ
-        </Link>
-      </>
-    );
-  } else if (location.pathname == '/profile') {
-    return (
-      <>
-        <Link as={ReactLink} to="/" pl="1em" pr="1em">
-          Home
-        </Link>
-        <Link as={ReactLink} to="/" pl="1em" pr="1em">
-          Gallery
-        </Link>
-      </>
-    );
-  }
+  // if (location.pathname == '/' || location.pathname == '/how') {
+  //   return (
+  //     <>
+  //       <Link as={ReactLink} to="/" pl="1em" pr="1em">
+  //         Home
+  //       </Link>
+  //       <Link as={ReactLink} to="/how" pl="1em" pr="1em">
+  //         How it works
+  //       </Link>
+  //       <Link as={ReactLink} to="/about" pl="1em" pr="1em">
+  //         About us
+  //       </Link>
+  //       <Link as={ReactLink} to="/faq" pl="1em" pr="1em">
+  //         FAQ
+  //       </Link>
+  //     </>
+  //   );
+  // } else if (location.pathname == '/profile') {
+  //   return (
+  //     <>
+  //       <Link as={ReactLink} to="/" pl="1em" pr="1em">
+  //         Home
+  //       </Link>
+  //       <Link as={ReactLink} to="/" pl="1em" pr="1em">
+  //         Gallery
+  //       </Link>
+  //     </>
+  //   );
+  // }
 };
 
 export default Navbar;

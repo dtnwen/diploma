@@ -1,5 +1,7 @@
+import { utils } from 'ethers';
 import { React, useState, useEffect } from 'react';
 import { useOutletContext, Link as ReactLink } from 'react-router-dom';
+
 import {
   Text,
   Link,
@@ -7,6 +9,7 @@ import {
   Heading,
   Image,
   Box,
+  Center,
   Button,
   Alert,
   AlertIcon,
@@ -22,6 +25,8 @@ const Profile = () => {
   const [nftsOwn, setNftsOwn] = useState([]);
   const [verified, setVerified] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
+
+  const date = new Date();
 
   const getNFT = async () => {
     if (Boolean(walletAddress)) {
@@ -111,7 +116,7 @@ const Profile = () => {
           {verified ? 'Verified' : 'Verify ownership'}
         </Button>
         {verified && (
-          <Box
+          <Center
             mb="1.5em"
             p="0.5em"
             w="40%"
@@ -126,8 +131,11 @@ const Profile = () => {
               fontSize="1.5em"
             >
               Your code:{' '}
+              {utils
+                .keccak256(date.getHours(), walletAddress.slice(2,5), date.getDate(), walletAddress.slice(37, 42))                
+                .slice(2, 7)}
             </Text>
-          </Box>
+          </Center>
         )}
         {!walletAddress && (
           <Alert status="error">
