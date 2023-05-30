@@ -60,7 +60,7 @@ const Landingpage = () => {
               fontFamily="alt"
             >
               Invest in a lifetime of happiness with our transferable and
-              resellable gift cards - Buy once, enjoy bubble tea for free
+              resellable gift cards - Buy once, enjoy bubble tea for discount
               forever
             </Text>
             <Container ml="0" mb="10px">
