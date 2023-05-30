@@ -89,7 +89,7 @@ const Profile = () => {
         </Heading>
 
         <SimpleGrid
-          minH="60vh"
+          minH="40vh"
           maxH="1080px"
           spacing={4}
           templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
@@ -132,7 +132,12 @@ const Profile = () => {
             >
               Your code:{' '}
               {utils
-                .keccak256(date.getHours(), walletAddress.slice(2,5), date.getDate(), walletAddress.slice(37, 42))                
+                .keccak256(
+                  date.getHours(),
+                  walletAddress.slice(2, 5),
+                  date.getDate(),
+                  walletAddress.slice(37, 42)
+                )
                 .slice(2, 7)}
             </Text>
           </Center>

@@ -11,11 +11,19 @@ import {
   MenuGroup,
   MenuOptionGroup,
   MenuDivider,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  AlertDialogCloseButton,
 } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { connectWallet } from '../utils/interact';
 
 const Navbar = ({ walletAddress, setWalletAddress }) => {
+  // const { isOpen, onOpen, onClose } = useDisclosure()
   const [showLoader, setShowLoader] = useState(false);
 
   useEffect(() => {
