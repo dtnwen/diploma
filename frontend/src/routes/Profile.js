@@ -19,6 +19,7 @@ import {
 } from '@chakra-ui/react';
 import Card from '../components/Cards';
 import { getNFTs } from '../utils/verify';
+import { codeGenerate } from '../utils/promocode';
 
 const Profile = () => {
   const [walletAddress, setWalletAddress] = useOutletContext();
@@ -29,14 +30,18 @@ const Profile = () => {
   const date = new Date();
 
   const getNFT = async () => {
-    if (Boolean(walletAddress)) {
-      setShowLoader(true);
-      const response = await getNFTs();
-      await setNftsOwn(response);
-    } else {
-      setShowLoader(true);
-      setVerified(false);
-      setShowLoader(false);
+    try {
+      if (Boolean(walletAddress)) {
+        setShowLoader(true);
+        const response = await getNFTs();
+        await setNftsOwn(response);
+      } else {
+        setShowLoader(true);
+        setVerified(false);
+        setShowLoader(false);
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -130,15 +135,7 @@ const Profile = () => {
               fontWeight="bold"
               fontSize="1.5em"
             >
-              Your code:{' '}
-              {utils
-                .keccak256(
-                  date.getHours(),
-                  walletAddress.slice(2, 5),
-                  date.getDate(),
-                  walletAddress.slice(37, 42)
-                )
-                .slice(2, 7)}
+              Your code: {codeGenerate(walletAddress).slice(2, 6)}
             </Text>
           </Center>
         )}

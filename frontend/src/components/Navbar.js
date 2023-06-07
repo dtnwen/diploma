@@ -102,7 +102,7 @@ const Navbar = ({ walletAddress, setWalletAddress }) => {
               onClick={connect}
             >
               {Boolean(walletAddress) ? (
-                String(walletAddress).substring(0, 5) +
+                String(walletAddress).substring(0, 6) +
                 '...' +
                 String(walletAddress).substring(38)
               ) : (

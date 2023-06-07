@@ -1,3 +1,4 @@
+import { Network, Alchemy } from 'alchemy-sdk';
 import React, { useState } from 'react';
 import { utils } from 'ethers';
 import { UnlockIcon } from '@chakra-ui/icons';
@@ -17,6 +18,14 @@ import {
   Alert,
   AlertIcon,
 } from '@chakra-ui/react';
+import { codeVerify, validHex, ownerVerify } from '../utils/promocode';
+
+const CONTRACT_ADDRESS = '0x53CFBAa67156102220DDf3a1a9452A9600aB0654';
+const settings = {
+  apiKey: process.env.REACT_APP_API_KEY,
+  network: Network.ETH_SEPOLIA,
+};
+const alchemy = new Alchemy(settings);
 
 const Verify = () => {
   const [showLoader, setShowLoader] = useState(null);
@@ -24,46 +33,63 @@ const Verify = () => {
   const [last, setLast] = useState('');
   const [code, setCode] = useState('');
   const [verified, setVerified] = useState(null);
-  const isError = first === '' || last === '' || code === '';
+  const isError = !validHex(first) || !validHex(last) || !validHex(code);
 
   const date = new Date();
 
   const setState = state => evt => state(evt.target.value);
 
   const verify = () => {
-    setShowLoader(true);
-    const userEnd = utils
-      .keccak256(date.getHours(), first, date.getDate(), last)
-      .slice(2, 7);
-    console.log(userEnd);
-    if (userEnd === code) {
-      setVerified(true);
-    } else {
-      setVerified(false);
+    try {
+      if (ownerVerify) {
+        setShowLoader(true);
+        const userEnd = codeVerify(first, last).slice(2, 6);
+        console.log(userEnd);
+        if (userEnd === code) {
+          setVerified(true);
+        } else {
+          setVerified(false);
+        }
+        setShowLoader(false);
+      } else setVerified(false);
+    } catch (error) {
+      console.error(error);
     }
-    setShowLoader(false);
   };
+
   return (
     <>
       <Container>
         <FormControl mb="1.5em" isRequired>
-          <FormLabel>First 3 character of wallet address</FormLabel>
+          <FormLabel>First 4 character of wallet address</FormLabel>
           <InputGroup>
             <InputLeftAddon children="0x" />
-            <Input placeholder="eg: 2f6" onChange={setState(setFirst)} />
+            <Input
+              value={first}
+              placeholder="eg: 23f6"
+              onChange={setState(setFirst)}
+            />
           </InputGroup>
         </FormControl>
 
         <Divider />
         <FormControl mb="1.5em" isRequired>
           <FormLabel>Last 4 character of wallet address</FormLabel>
-          <Input placeholder="eg: f7e3" onChange={setState(setLast)} />
+          <Input
+            value={last}
+            placeholder="eg: f7e3"
+            onChange={setState(setLast)}
+          />
         </FormControl>
 
         <Divider />
         <FormControl mb="1.5em" isRequired>
           <FormLabel>Code</FormLabel>
-          <Input placeholder="eg: f2ee1" onChange={setState(setCode)} />
+          <Input
+            value={code}
+            placeholder="eg: f2ee"
+            onChange={setState(setCode)}
+          />
         </FormControl>
 
         <Button
@@ -76,7 +102,7 @@ const Verify = () => {
           Verify
         </Button>
         {verified !== null && (
-          <Alert mt='1em'status={verified ? 'success' : 'error'}>
+          <Alert mt="1em" status={verified ? 'success' : 'error'}>
             <AlertIcon />
             {verified ? 'Verified' : 'Verification failed!'}
           </Alert>

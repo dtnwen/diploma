@@ -9,5 +9,5 @@ export {
     ErrorPage,
     Landingpage,
     Instruction,
-    Verify
+    Verify,
 }

@@ -28,7 +28,7 @@ const Cards = ({ nftsOwn }) => {
           </CardHeader>
 
           <CardBody pt="0">
-            <Image src={nftsOwn.media[0].gateway} alt="NFT image" />
+            <Image src={nftsOwn.media[0].gateway} alt="NFT image" />          
             <Text m="1em 0 1em 0" fontFamily="alt">
               {nftsOwn.description}
             </Text>
